@@ -6,21 +6,24 @@ import android.os.Handler;
 import android.os.Looper;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SplashActivity extends AppCompatActivity {
+ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        //ekranının tasarım dosyası ayarlanır
         setContentView(R.layout.activity_splash);
-
-        // 2.5 saniye sonra MainActivity'ye geçiş yap
+        
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                // HATA DÜZELTİLDİ: Intent'in ilk parametresi Context (SplashActivity.this) olmalıdır.
+                // splash ekranından ana ekrana geçiş yapmak için Intent oluşturulur
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                
                 startActivity(intent);
-                finish(); // Splash ekranını kapat
+                
+                finish();
             }
         }, 2500);
     }

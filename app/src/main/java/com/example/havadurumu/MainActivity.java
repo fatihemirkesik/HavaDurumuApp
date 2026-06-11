@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Kenar boşlukları ayarı (Edge-to-Edge)
+        // boşluk ayarlama
         View mainView = findViewById(R.id.main);
         if (mainView != null) {
             ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
 
-        // UI Elemanlarını Bağla
         editTextCity = findViewById(R.id.editTextCity);
         textViewCityName = findViewById(R.id.textViewCityName);
         textViewTemp = findViewById(R.id.textViewTemp);
@@ -66,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
         buttonAddToFavorites = findViewById(R.id.buttonAddToFavorites);
         buttonViewFavorites = findViewById(R.id.buttonViewFavorites);
 
-        // Favorilerden gelen bir şehir var mı kontrol et
+        // favorilerde şehir kontrolü
         handleIntent(getIntent());
 
-        // Şehir Arama
+        // arama yapma
         buttonSearch.setOnClickListener(v -> {
             String city = editTextCity.getText().toString().trim();
             if (!city.isEmpty()) {
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Favorilere Ekleme (SQLite)
+        // favorilere ekleme
         buttonAddToFavorites.setOnClickListener(v -> {
             String city = textViewCityName.getText().toString();
             if (!city.equals("Şehir") && !city.isEmpty()) {
@@ -98,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Favoriler Ekranına Geçiş
+        //activity geçiş
         buttonViewFavorites.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
             startActivity(intent);
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // İnternet bağlantısını kontrol eden fonksiyon (Adım 6)
+    // internet bağlantısı kontrol ediliyor
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getWeatherData(String city) {
-        // API URL'si burada API_KEY değişkeni kullanılarak otomatik ve doğru şekilde oluşturuluyor.
+        // API URL
         String url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + API_KEY + "&units=metric&lang=tr";
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -149,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                         textViewTemp.setText(temp);
                         textViewDescription.setText(description.substring(0, 1).toUpperCase() + description.substring(1));
 
-                        // Hava durumu ikonunu Picasso ile yükle (Adım 5)
+                        // ikon ekleme
                         String iconUrl = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
                         Picasso.get().load(iconUrl).placeholder(R.mipmap.ic_launcher).into(imageViewWeatherIcon);
 
